@@ -21,27 +21,27 @@ class Board:
             result = False
         if (block < 1 or block > 4) :
             result = False
-
-        if (block == 1) :
-            if (self.__board1[pos] == '.') :
-                self.__board1[pos] = type
-            else :
-                result = False
-        if (block == 2) :
-            if (self.__board2[pos] == '.') :
-                self.__board2[pos] = type
-            else :
-                result = False
-        if (block == 3) :
-            if (self.__board3[pos] == '.') :
-                self.__board3[pos] = type
-            else :
-                result = False
-        if (block == 4) :
-            if (self.__board4[pos] == '.') :
-                self.__board4[pos] = type
-            else :
-                result = False
+        if (result) :
+            if (block == 1) :
+                if (self.__board1[pos] == '.') :
+                    self.__board1[pos] = type
+                else :
+                    result = False
+            if (block == 2) :
+                if (self.__board2[pos] == '.') :
+                    self.__board2[pos] = type
+                else :
+                    result = False
+            if (block == 3) :
+                if (self.__board3[pos] == '.') :
+                    self.__board3[pos] = type
+                else :
+                    result = False
+            if (block == 4) :
+                if (self.__board4[pos] == '.') :
+                    self.__board4[pos] = type
+                else :
+                    result = False
 
         return result
 
@@ -52,6 +52,30 @@ class Board:
     # Shift selected board left
     def shiftLeft(boardNum) :
         return False
+
+    #Returns -1 if no winner, 0 if w is winner, 1 if b is winner, 2 if tie
+    def checkWin(self) :
+        result = -1
+
+        count1 = 0
+        count2 = 0
+
+        #while (count1 < 6) :
+        check1 = self.__board1[0]
+        check2 = self.__board1[1]
+            
+            
+        """while (count2 < 3) :
+                check = self.__board1[count2 * 3]
+                count2 += 1
+            count2 = 0
+            while (count2 < 3) :
+                check = self.__board3[count2 * 3]
+                count2 += 1
+            count1 += 1"""
+
+
+        return result
 
     # Returns a String representation of the board
     def __repr__(self) :
