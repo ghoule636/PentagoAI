@@ -20,9 +20,9 @@ def main() :
     global player2Color
     global isAI
 
-    #testBoard()  #This function is used for testing board functionality.
+    testBoard()  #This function is used for testing board functionality.
 
-    start(initializeGame())
+    #start(initializeGame())
 
 def initializeGame() :
     import random
@@ -92,8 +92,46 @@ def testBoard() :
 
     print(test)
 
-    test.addPiece(3, 3, "w")
-    test.addPiece(1, 5, 'b')
+    #test.addPiece(3, 3, "w")
+    """
+    # horizontal win config
+    test.addPiece(3, 7, 'b')
+    test.addPiece(3, 8, 'b')
+    test.addPiece(3, 9, 'b')
+    test.addPiece(4, 7, 'b')
+    test.addPiece(4, 8, 'b')
+
+    # horizontal config 2
+    test.addPiece(1, 1, 'w')
+    test.addPiece(1, 2, 'w')
+    test.addPiece(1, 3, 'w')
+    test.addPiece(2, 1, 'w')
+    test.addPiece(2, 2, 'w')
+    test.addPiece(2, 3, 'b')
+    """
+
+    # vertical win config
+    """
+    test.addPiece(2, 3, 'w')
+    test.addPiece(2, 6, 'w')
+    test.addPiece(2, 9, 'w')
+    test.addPiece(4, 3, 'w')
+    test.addPiece(4, 6, 'w')
+    test.addPiece(4, 9, 'b')
+
+    # vertical config 2
+    test.addPiece(1, 1, 'b')
+    test.addPiece(1, 4, 'b')
+    test.addPiece(1, 7, 'b')
+    test.addPiece(3, 1, 'b')
+    test.addPiece(3, 4, 'b')
+    #test.addPiece(3, 7, 'w')
+    """    
+
+    # diagonal win config
+    test.addPiece(1, 1, 'w')
+
+    print("win? : {0}".format(test.checkWin()))
 
     print(test)
 
