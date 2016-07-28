@@ -20,9 +20,9 @@ def main() :
     global player2Color
     global isAI
 
-    testBoard()  #This function is used for testing board functionality.
+    #testBoard()  #This function is used for testing board functionality.
 
-    #start(initializeGame())
+    start(initializeGame())
 
 def initializeGame() :
     import random
@@ -74,18 +74,63 @@ def initializeGame() :
     return goFirst
 
 def start(firstMove) :
+    global player1Name
+    global player2Name
+    global player1Color
+    global player2Color
+    global isAI
 
     board = Board()
 
     print("\n\nInitial State:\n")
     print(board)
 
-    
+    winner = board.checkWin()
+    while (winner == -1) :
+        if (firstMove == 1) :
+            print("{0}'s turn".format(player1Name))
+            humanMove(board, player1Color)
+            print(board)
+            print("{0}'s turn".format(player2Name))
+            if (isAI == 'y') :
+                print("Computer Turn")
+                print(board)
+            else :
+                humanMove(board, player2Color)
+                print(board)
+        else :
+            print("{0}'s turn".format(player2Name))
+            if (isAI == 'y') :
+                print("Computer Turn")
+                print(board)
+            else :
+                humanMove(board, player2Color)
+                print(board)
+            print("{0}'s turn".format(player1Name))
+            humanMove(board, player1Color)
+            print(board)
+
+        winner = board.checkWin()
+        print(winner)
+
 
     return 0
 
-def humanMove() :
-    return 0
+def humanMove(board, type) :
+
+    move = input("Move: ")
+
+    boardNum = move[0]
+    pos = move[2]
+
+    check = board.addPiece(int(boardNum), int(pos), type)
+
+    while (not check) :
+        move = input("Invalid move try again")
+        boardNum = move[0]
+        pos = move[2]
+
+        check = board.addPiece(int(boardNum), int(pos), type)
 
 def testBoard() :
     test = Board()
