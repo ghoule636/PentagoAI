@@ -51,9 +51,8 @@ class Board:
         i = 0
         j = 0
         k = 0
-
         # vertical checks
-        while (i < 6) :
+        while (i < 6 and (not blackWin or not whiteWin)) :
             while (j <= 3) :
                 while (k < 3) :
                     if (self.__board[j + math.floor(i / 3)][(i % 3) + (3 * k)] != '.') :
@@ -84,7 +83,7 @@ class Board:
         j = 0
         k = 0
         # horizontal checks
-        while (i < 6) :
+        while (i < 6 and (not blackWin or not whiteWin)) :
             while (j < 2) :
                 while (k < 3) :
                     if (self.__board[j + (math.floor(i / 3) * 2)][((i % 3) * 3) + k] != '.') :
@@ -115,12 +114,17 @@ class Board:
         j = 0
         k = 0
         # diagonal checks
-        while (i < 4) :
+        while (i < 4 and (not blackWin or not whiteWin)) :#left to right large
             while (j < 3) :
                 if (self.__board[i][j * 4] != '.') :
-                    charCheck = self.__board[i][j * 4]
-                    charCount += 1
-
+                    if (self.__board[i][j * 4] != charCheck) :
+                        charCheck = self.__board[i][j * 4]
+                        charCount = 1
+                    else :
+                        charCount += 1
+                else :
+                    charCount = 1
+                    charCheck = '.'
                 j += 1
                 if (charCount == 5) :
                         if (charCheck == 'b' and not blackWin) :
@@ -129,10 +133,141 @@ class Board:
                         if (charCheck == 'w' and not whiteWin) :
                             result += 1
                             whiteWin = True
+            j = 0
+            i += 3
 
+        i = 1
+        j = 2
+        k = 0
+        while (i < 3 and (not blackWin or not whiteWin)) :#right to left large
+            while (j < 8) :
+                if (self.__board[i][j] != '.') :
+                    if (self.__board[i][j] != charCheck) :
+                        charCheck = self.__board[i][j]
+                        charCount = 1
+                    else :
+                        charCount += 1
 
-            i += 2
+                else :
+                    charCount = 1
+                    charCheck = '.'
+                j += 2
+                
+                if (charCount == 5) :
+                        if (charCheck == 'b' and not blackWin) :
+                            result += 2
+                            blackWin = True
+                        if (charCheck == 'w' and not whiteWin) :
+                            result += 1
+                            whiteWin = True
+            j = 2
+            i += 1
 
+        i = 0 
+        j = 0
+        k = 0
+        while (i < 2 and (not blackWin or not whiteWin)) :#left to right small
+            while (j < 2) :
+                while (k < 2) :
+                    boardSpot = self.__board[j * 3][((k * 4) + 1) + (i * 2)]
+                    if (boardSpot != '.') :
+                        if (boardSpot != charCheck) :
+                            charCheck = boardSpot
+                            charCount = 1
+                        else :
+                            charCount += 1
+                    else :
+                        charCount = 1
+                        charCheck = '.'
+
+                    if (j == 0 and k == 1) :
+                        if (i == 0) :
+                            if (self.__board[1][6] != '.') :
+                                if (self.__board[1][6] != charCheck) :
+                                    charCheck = self.__board[1][6]
+                                    charCount = 1
+                                else :
+                                    charCount += 1
+                            else :
+                                charCheck = '.'
+                                charCount = 1
+                        else :
+                            if (self.__board[2][2] != '.') :
+                                if (self.__board[2][2] != charCheck) :
+                                    charCheck = self.__board[2][2]
+                                    charCount = 1
+                                else :
+                                    charCount += 1
+                            else :
+                                charCheck = '.'
+                                charCount = 1
+                    k += 1
+                k = 0
+                j += 1
+            if (charCount == 5) :
+                if (charCheck == 'b' and not blackWin) :
+                    result += 2
+                    blackWin = True
+                if (charCheck == 'w' and not whiteWin) :
+                    result += 1
+                    whiteWin = True
+
+            j = 0
+            charCount = 0
+            i += 1
+
+        i = 0
+        k = 0
+        j = 0
+        while (i < 2 and (not blackWin or not whiteWin)) :#right to left small
+            while (j < 2) :
+                while (k < 2) :
+                    boardSpot = self.__board[j + 1][((k * 2) + 1) + (i * 4)]
+                    if (boardSpot != '.') :
+                        if (boardSpot != charCheck) :
+                            charCheck = boardSpot
+                            charCount = 1
+                        else :
+                            charCount += 1
+                    else :
+                        charCount = 1
+                        charCheck = '.'
+
+                    if (j == 0 and k == 1) :
+                        if (i == 0) :
+                            if (self.__board[0][8] != '.') :
+                                if (self.__board[0][8] != charCheck) :
+                                    charCheck = self.__board[0][8]
+                                    charCount = 1
+                                else :
+                                    charCount += 1
+                            else :
+                                charCheck = '.'
+                                charCount = 1
+                        else :
+                            if (self.__board[3][0] != '.') :
+                                if (self.__board[3][0] != charCheck) :
+                                    charCheck = self.__board[3][0]
+                                    charCount = 1
+                                else :
+                                    charCount += 1
+                            else :
+                                charCheck = '.'
+                                charCount = 1
+                    k += 1
+                k = 0
+                j += 1
+            if (charCount == 5) :
+                if (charCheck == 'b' and not blackWin) :
+                    result += 2
+                    blackWin = True
+                if (charCheck == 'w' and not whiteWin) :
+                    result += 1
+                    whiteWin = True
+
+            j = 0
+            charCount = 0
+            i += 1
 
         return result
 

@@ -91,10 +91,9 @@ def testBoard() :
     test = Board()
 
     print(test)
-
-    #test.addPiece(3, 3, "w")
-    """
+    
     # horizontal win config
+    """
     test.addPiece(3, 7, 'b')
     test.addPiece(3, 8, 'b')
     test.addPiece(3, 9, 'b')
@@ -126,11 +125,49 @@ def testBoard() :
     test.addPiece(3, 1, 'b')
     test.addPiece(3, 4, 'b')
     #test.addPiece(3, 7, 'w')
-    """    
+    """
 
-    # diagonal win config
+    # diagonal win configs
+    """
     test.addPiece(1, 1, 'w')
+    test.addPiece(1, 5, 'b')
+    test.addPiece(1, 9, 'b')
+    test.addPiece(4, 1, 'b')
+    test.addPiece(4, 5, 'b')
+    test.addPiece(4, 9, 'b')
 
+    test.addPiece(2, 3, 'w')
+    test.addPiece(2, 5, 'w')
+    test.addPiece(2, 7, 'w')
+    test.addPiece(3, 3, 'w')
+    test.addPiece(3, 5, 'w')
+    test.addPiece(3, 7, 'b')
+    """
+    
+    test.addPiece(1, 2, 'w')
+    test.addPiece(1, 6, 'w')
+    test.addPiece(2, 7, 'w')
+    test.addPiece(4, 2, 'w')
+    test.addPiece(4, 6, 'w')
+    
+    test.addPiece(1, 4, 'b')
+    test.addPiece(1, 8, 'b')
+    test.addPiece(3, 3, 'b')
+    test.addPiece(4, 4, 'b')
+    test.addPiece(4, 8, 'b')
+    
+    test.addPiece(2, 2, 'w')
+    test.addPiece(2, 4, 'w')
+    test.addPiece(1, 9, 'w')
+    test.addPiece(3, 2, 'w')
+    test.addPiece(3, 4, 'b')
+
+    test.addPiece(2, 6, 'b')
+    test.addPiece(2, 8, 'b')
+    test.addPiece(4, 1, 'b')
+    test.addPiece(3, 6, 'b')
+    test.addPiece(3, 8, 'b')
+    
     print("win? : {0}".format(test.checkWin()))
 
     print(test)
