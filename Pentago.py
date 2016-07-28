@@ -12,6 +12,8 @@ global player2Name
 global player1Color
 global player2Color
 global isAI
+global moveList
+global outputFile
 
 def main() :
     global player1Name
@@ -19,6 +21,7 @@ def main() :
     global player1Color
     global player2Color
     global isAI
+    global moveList
 
     #testBoard()  #This function is used for testing board functionality.
 
@@ -31,7 +34,12 @@ def initializeGame() :
     global player1Color
     global player2Color
     global isAI
+    global moveList
+    global outputFile
 
+    moveList = []
+    outputFile = open("output.txt", 'w')
+    
     player1Name = input("Player 1 Name: ")
     player2Name = input("Player 2 Name: ")
     player1Color = ""
@@ -66,6 +74,7 @@ def initializeGame() :
 
     print("Welcome {0}!".format(player1Name), end='')
     print(" You have chosen: {0}".format(colorChoice))
+    outputFile.write("Player 1 Name: {0}\nPlayer 2 Name: {1}\nPlayer 1 Color: {2}\nPlayer 2 Color:{3}\n".format(player1Name, player2Name, player1Color, player2Color))
     random.seed()
     goFirst = random.randint(1, 2)
 
@@ -79,6 +88,7 @@ def start(firstMove) :
     global player1Color
     global player2Color
     global isAI
+    global outputFile
 
     board = Board()
 
@@ -91,13 +101,15 @@ def start(firstMove) :
             print("{0}'s turn".format(player1Name))
             humanMove(board, player1Color)
             print(board)
-            print("{0}'s turn".format(player2Name))
-            if (isAI == 'y') :
-                print("Computer Turn")
-                print(board)
-            else :
-                humanMove(board, player2Color)
-                print(board)
+            winner = board.checkWin()
+            if (winner == -1) :
+                print("{0}'s turn".format(player2Name))
+                if (isAI == 'y') :
+                    print("Computer Turn")
+                    print(board)
+                elif (winner == -1) :
+                    humanMove(board, player2Color)
+                    print(board)
         else :
             print("{0}'s turn".format(player2Name))
             if (isAI == 'y') :
@@ -106,31 +118,68 @@ def start(firstMove) :
             else :
                 humanMove(board, player2Color)
                 print(board)
-            print("{0}'s turn".format(player1Name))
-            humanMove(board, player1Color)
-            print(board)
+            winner == board.checkWin()
+            if (winner == -1) :
+                print("{0}'s turn".format(player1Name))
+                humanMove(board, player1Color)
+                print(board)
 
         winner = board.checkWin()
-        print(winner)
+    print("Game Over!")
+    if (winner == 0) :
+        winNum = -1
+        if (player1Color == 'w') :
+            winNum = 0
+        else :
+            winNum = 1
+    elif (winner == 1) :
+        if (player1Color == 'b') :
+            winNum = 0
+        else :
+            winNum = 1
+    elif (winner == 2) :
+        print("\nTie!\n")
+
+    if (winNum == 0) :
+        print("\nCongratulations {0}, You Win!\n".format(player1Name))
+    elif (winNum == 1) :
+        print ("\nCongratulations {0}, You Win!\n".format(player2Name))
 
 
     return 0
 
 def humanMove(board, type) :
+    global moveList
+    global outputFile
 
     move = input("Move: ")
 
-    boardNum = move[0]
-    pos = move[2]
+    boardNum = int(move[0])
+    pos = int(move[2])
+    boardRotate = move[4]
+    rotateDir = move[5]
 
-    check = board.addPiece(int(boardNum), int(pos), type)
+    check = board.addPiece(boardNum, pos, type)
 
     while (not check) :
         move = input("Invalid move try again")
-        boardNum = move[0]
-        pos = move[2]
+        boardNum = int(move[0])
+        pos = int(move[2])
+        boardRotate = move[4]
+        rotateDir = move[5]
 
-        check = board.addPiece(int(boardNum), int(pos), type)
+        check = board.addPiece(boardNum, pos, type)
+        
+    winCheck = board.checkWin()
+    if (winCheck == -1) :
+        if (rotateDir.lower() == 'l') :
+            board.shiftLeft(int(boardRotate))
+        else :
+            board.shiftRight(int(boardRotate))
+    moveList.append(move)
+    outputFile.write(str(board) + "\n")
+    outputFile.write(str(moveList) + "\n")
+
 
 def testBoard() :
     test = Board()

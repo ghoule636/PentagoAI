@@ -31,11 +31,13 @@ class Board:
         return result
 
     # Shift selected board right
-    def shiftRight(boardNum) :
+    def shiftRight(self, boardNum) :
+        boardNum -= 1
+        temp = self.__board[boardNum][0]
         return False
 
     # Shift selected board left
-    def shiftLeft(boardNum) :
+    def shiftLeft(self, boardNum) :
         return False
 
     #Returns -1 if no winner, 0 if w is winner, 1 if b is winner, 2 or greater if tie
@@ -275,7 +277,9 @@ class Board:
     def __repr__(self) :
         result = ""
 
-        result = "+--------+--------+\n|{0}  {1}  {2} | {3}  {4}  {5}|\n|{6}  {7}  {8} | {9}  {10}  {11}|\n|{12}  {13}  {14} | {15}  {16}  {17}|\n+--------+--------+\n|{18}  {19}  {20} | {21}  {22}  {23}|\n|{24}  {25}  {26} | {27}  {28}  {29}|\n|{30}  {31}  {32} | {33}  {34}  {35}|\n+--------+--------+".format(self.__board[0][0], 
+        result = "+--------+--------+\n|{0}  {1}  {2} | {3}  {4}  {5}|\n|{6}  {7}  {8} | {9}\
+  {10}  {11}|\n|{12}  {13}  {14} | {15}  {16}  {17}|\n+--------+--------+\n|{18}  {19}\
+  {20} | {21}  {22}  {23}|\n|{24}  {25}  {26} | {27}  {28}  {29}|\n|{30}  {31}  {32} | {33}  {34}  {35}|\n+--------+--------+".format(self.__board[0][0], 
                 self.__board[0][1], self.__board[0][2], self.__board[1][0], self.__board[1][1], self.__board[1][2],
                 self.__board[0][3], self.__board[0][4], self.__board[0][5], self.__board[1][3], self.__board[1][4], self.__board[1][5],
                 self.__board[0][6], self.__board[0][7], self.__board[0][8], self.__board[1][6], self.__board[1][7], self.__board[1][8], 
