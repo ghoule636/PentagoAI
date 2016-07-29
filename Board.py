@@ -34,11 +34,41 @@ class Board:
     def shiftRight(self, boardNum) :
         boardNum -= 1
         temp = self.__board[boardNum][0]
-        return False
+        temp2 = self.__board[boardNum][2]
+        self.__board[boardNum][2] = temp
+        temp = self.__board[boardNum][8]
+        self.__board[boardNum][8] = temp2
+        temp2 = self.__board[boardNum][6]
+        self.__board[boardNum][6] = temp
+        self.__board[boardNum][0] = temp2
+        temp = self.__board[boardNum][1]
+        temp2 = self.__board[boardNum][5]
+        self.__board[boardNum][5] = temp
+        temp = self.__board[boardNum][7]
+        self.__board[boardNum][7] = temp2
+        temp2 = self.__board[boardNum][3]
+        self.__board[boardNum][3] = temp
+        self.__board[boardNum][1] = temp2
 
     # Shift selected board left
     def shiftLeft(self, boardNum) :
-        return False
+        boardNum -= 1
+        temp = self.__board[boardNum][0]
+        temp2 = self.__board[boardNum][6]
+        self.__board[boardNum][6] = temp
+        temp = self.__board[boardNum][8]
+        self.__board[boardNum][8] = temp2
+        temp2 = self.__board[boardNum][2]
+        self.__board[boardNum][2] = temp
+        self.__board[boardNum][0] = temp2
+        temp = self.__board[boardNum][1]
+        temp2 = self.__board[boardNum][3]
+        self.__board[boardNum][3] = temp
+        temp = self.__board[boardNum][7]
+        self.__board[boardNum][7] = temp2
+        temp2 = self.__board[boardNum][5]
+        self.__board[boardNum][5] = temp
+        self.__board[boardNum][1] = temp2
 
     #Returns -1 if no winner, 0 if w is winner, 1 if b is winner, 2 or greater if tie
     def checkWin(self) :

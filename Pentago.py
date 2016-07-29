@@ -138,6 +138,7 @@ def start(firstMove) :
         else :
             winNum = 1
     elif (winner == 2) :
+        winNum = -1
         print("\nTie!\n")
 
     if (winNum == 0) :
