@@ -25,7 +25,9 @@ def main() :
 
     #testBoard()  #This function is used for testing board functionality.
 
-    start(initializeGame())
+    testAI() # This is used to test the AI functionality.
+
+    #start(initializeGame())
 
 def initializeGame() :
     import random
@@ -266,5 +268,18 @@ def testBoard() :
     print("win? : {0}".format(test.checkWin()))
 
     print(test)
+
+def testAI() :
+    test = Board()
+
+    test.addPiece(3, 7, 'b')
+    test.addPiece(3, 8, 'b')
+    test.addPiece(3, 9, 'b')
+    test.addPiece(4, 7, 'b')
+    test.addPiece(4, 8, 'b')
+
+    test2 = test.copyBoard
+
+    print(test2)
 
 main()
