@@ -3,6 +3,7 @@
 # Programming Assignment 2
 # TCSS 435 AI Spring 2016
 """
+import copy
 
 class Board:
     def __init__(self) :
@@ -13,10 +14,7 @@ class Board:
         self.__board[3] = ['.'] * 9
 
     def copyBoard(self) :
-        import copy
-        #result = Board()
-        result = copy.deepcopy(self)
-        return result
+        return copy.deepcopy(self)
 
     # Adds type char to selected block and position.
     # Will return false if this position is already taken or

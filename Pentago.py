@@ -183,7 +183,6 @@ def humanMove(board, type) :
     outputFile.write(str(board) + "\n")
     outputFile.write(str(moveList) + "\n")
 
-
 def testBoard() :
     test = Board()
 
@@ -278,8 +277,10 @@ def testAI() :
     test.addPiece(4, 7, 'b')
     test.addPiece(4, 8, 'b')
 
-    test2 = test.copyBoard
+    test2 = test.copyBoard()
 
+    test2.addPiece(1, 1, 'w')
+    print(test)
     print(test2)
 
 main()
