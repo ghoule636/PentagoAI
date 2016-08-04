@@ -6,6 +6,7 @@
 
 import sys
 from Board import Board
+import random
 
 global player1Name
 global player2Name
@@ -14,6 +15,7 @@ global player2Color
 global isAI
 global moveList
 global outputFile
+global maxDepth
 
 def main() :
     global player1Name
@@ -22,15 +24,19 @@ def main() :
     global player2Color
     global isAI
     global moveList
+    global maxDepth
+    global outputFile
+
+    outputFile = open("output.txt", 'w')
+    maxDepth = 3
 
     #testBoard()  #This function is used for testing board functionality.
 
-    testAI() # This is used to test the AI functionality.
+    #testAI() # This is used to test the AI functionality.
 
-    #start(initializeGame())
+    start(initializeGame())
 
 def initializeGame() :
-    import random
     global player1Name
     global player2Name
     global player1Color
@@ -40,8 +46,7 @@ def initializeGame() :
     global outputFile
 
     moveList = []
-    outputFile = open("output.txt", 'w')
-    
+        
     player1Name = input("Player 1 Name: ")
     player2Name = input("Player 2 Name: ")
     player1Color = ""
@@ -76,7 +81,7 @@ def initializeGame() :
 
     print("Welcome {0}!".format(player1Name), end='')
     print(" You have chosen: {0}".format(colorChoice))
-    outputFile.write("Player 1 Name: {0}\nPlayer 2 Name: {1}\nPlayer 1 Color: {2}\nPlayer 2 Color:{3}\n".format(player1Name, player2Name, player1Color, player2Color))
+    outputFile.write("Player 1 Name: {0}\nPlayer 2 Name: {1}\nPlayer 1 Color: {2}\nPlayer 2 Color: {3}\n".format(player1Name, player2Name, player1Color, player2Color))
     random.seed()
     goFirst = random.randint(1, 2)
 
