@@ -6,6 +6,7 @@
 
 import sys
 from Board import Board
+import AI
 import random
 
 global player1Name
@@ -32,9 +33,9 @@ def main() :
 
     #testBoard()  #This function is used for testing board functionality.
 
-    #testAI() # This is used to test the AI functionality.
+    testAI() # This is used to test the AI functionality.
 
-    start(initializeGame())
+    #start(initializeGame()) # This function starts the main game.
 
 def initializeGame() :
     global player1Name
@@ -113,6 +114,7 @@ def start(firstMove) :
                 print("{0}'s turn".format(player2Name))
                 if (isAI == 'y') :
                     print("Computer Turn")
+                    AIMove(board, player2Color)
                     print(board)
                 elif (winner == -1) :
                     humanMove(board, player2Color)
@@ -121,6 +123,7 @@ def start(firstMove) :
             print("{0}'s turn".format(player2Name))
             if (isAI == 'y') :
                 print("Computer Turn")
+                AIMove(board, player2Color)
                 print(board)
             else :
                 humanMove(board, player2Color)
@@ -155,6 +158,14 @@ def start(firstMove) :
 
 
     return 0
+
+def AIMove(board, type) :
+    global maxDepth
+
+    move = AI.decideMove(board, maxDepth)
+
+    print("AI move: " + str(move))
+
 
 def humanMove(board, type) :
     global moveList
@@ -275,6 +286,7 @@ def testBoard() :
 
 def testAI() :
     test = Board()
+    maxDepth = 2
 
     test.addPiece(3, 7, 'b')
     test.addPiece(3, 8, 'b')
@@ -286,6 +298,8 @@ def testAI() :
 
     test2.addPiece(1, 1, 'w')
     print(test)
-    print(test2)
+    #print(test2)
+
+    AI.decideMove(test, maxDepth)
 
 main()

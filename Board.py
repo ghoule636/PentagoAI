@@ -4,6 +4,8 @@
 # TCSS 435 AI Spring 2016
 """
 import copy
+import math
+
 
 class Board:
     def __init__(self) :
@@ -74,9 +76,8 @@ class Board:
         self.__board[boardNum][5] = temp
         self.__board[boardNum][1] = temp2
 
-    #Returns -1 if no winner, 0 if w is winner, 1 if b is winner, 2 or greater if tie
+    # Returns -1 if no winner, 0 if w is winner, 1 if b is winner, 2 or greater if tie
     def checkWin(self) :
-        import math
         result = -1
         blackWin = False
         whiteWin = False
@@ -305,6 +306,44 @@ class Board:
             charCount = 0
             i += 1
 
+        return result
+
+    # 
+    def heuristicValue(self) :
+        result = 0
+        # Creates a temporary version of the board that is easier to check heuristic values.
+        tempBoard = self.convertBoard()
+        currChar = ''
+        currCount = 0
+        
+        for i in range(6) :
+            for j in range(6) :
+                print(j)
+
+        return result
+
+    def convertBoard(self) :
+        result = []
+        for i in range(6) :
+            result.append(['.'] * 6)
+        i = 0
+        j = 0
+        k = 0
+        temp1 = 0
+        temp2 = 0
+        while (i < 6) :
+            while (j < 2) :
+                while (k < 3) :
+                    result[temp1][temp2] = self.__board[j + (math.floor(i / 3) * 2)][((i % 3) * 3) + k]
+                    k += 1
+                    temp2 += 1
+                j += 1
+                k = 0  
+            j = 0
+            temp1 += 1
+            temp2 = 0
+            i += 1
+        
         return result
 
     # Returns a String representation of the board
