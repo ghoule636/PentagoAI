@@ -162,7 +162,7 @@ def start(firstMove) :
 def AIMove(board, type) :
     global maxDepth
 
-    move = AI.decideMove(board, maxDepth)
+    move = AI.decideMove(board, maxDepth, type)
 
     print("AI move: " + str(move))
 
@@ -286,13 +286,23 @@ def testBoard() :
 
 def testAI() :
     test = Board()
-    maxDepth = 2
+    maxDepth = 3
 
+    # diagonal win configs
+    
+    test.addPiece(1, 1, 'b')
+    test.addPiece(1, 5, 'b')
+    test.addPiece(1, 9, 'b')
+    test.addPiece(4, 1, 'b')
+    test.addPiece(4, 5, 'b')
+    test.addPiece(4, 9, 'b')
+
+    test.addPiece(2, 3, 'b')
+    test.addPiece(2, 5, 'b')
+    test.addPiece(2, 7, 'b')
+    test.addPiece(3, 3, 'b')
+    test.addPiece(3, 5, 'b')
     test.addPiece(3, 7, 'b')
-    test.addPiece(3, 8, 'b')
-    test.addPiece(3, 9, 'b')
-    test.addPiece(4, 7, 'b')
-    test.addPiece(4, 8, 'b')
 
     test2 = test.copyBoard()
 
@@ -300,6 +310,7 @@ def testAI() :
     print(test)
     #print(test2)
 
-    AI.decideMove(test, maxDepth)
+    AI.decideMove(test, maxDepth, 'w')
+    print("Done!")
 
 main()

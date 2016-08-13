@@ -6,7 +6,6 @@
 import copy
 import math
 
-
 class Board:
     def __init__(self) :
         self.__board = [0] * 4
@@ -313,15 +312,21 @@ class Board:
         result = 0
         # Creates a temporary version of the board that is easier to check heuristic values.
         tempBoard = self.convertBoard()
-        currChar = ''
-        currCount = 0
         
-        for i in range(6) :
-            for j in range(6) :
-                print(j)
+        h = horizontalHValue(tempBoard)
+        v = verticalHValue(tempBoard)
+        d = diagonalHValue(tempBoard)
+
+        print("h " + str(h))
+        print("v " + str(v))
+        print("d " + str(d))
+
+        # add up heuristic values here
+        result = h + v + d
 
         return result
 
+    # Converts the board data to a form more easy to iterate over when calculating heuristics
     def convertBoard(self) :
         result = []
         for i in range(6) :
@@ -366,3 +371,137 @@ class Board:
         #result = str(self.__board)
 
         return result
+# Calculates heuristic values of diagonal board segments
+def diagonalHValue(board) :
+    currChar = ''
+    currCount = 0
+    char2 = ''
+    count2 = 0
+    result = 0
+    for i in range(6) :
+        if (board[i][5 - i] != char2) :
+            count2 = 1
+            char2 = board[i][5 - i]
+        else :
+            count2 += 1
+            if (count2 == 2) :
+                if (char2 == 'b') :
+                    result -= 3
+                elif (char2 == 'w') :
+                    result += 3
+            elif (count2 == 3) :
+                if (char2 == 'b') :
+                    result -= 6
+                elif (char2 == 'w') :
+                    result += 6
+            elif (count2 == 4) :
+                if (char2 == 'b') :
+                    result -= 8
+                elif (char2 == 'w') :
+                    result += 8
+            elif (count2 == 5) :
+                if (char2 == 'b') :
+                    result -= 100
+                elif (char2 == 'w') :
+                    result += 100
+
+        if (board[i][i] != currChar) :
+            currCount = 1
+            currChar = board[i][i]
+        else :
+            currCount += 1
+            if (currCount == 2) :
+                if (currChar == 'b') :
+                    result -= 3
+                elif (currChar == 'w') :
+                    result += 3
+            elif (currCount == 3) :
+                if (currChar == 'b') :
+                    result -= 6
+                elif (currChar == 'w') :
+                    result += 6
+            elif (currCount == 4) :
+                if (currChar == 'b') :
+                    result -= 8
+                elif (currChar == 'w') :
+                    result += 8
+            elif (currCount == 5) :
+                if (currChar == 'b') :
+                    result -= 100
+                elif (currChar == 'w') :
+                    result += 100
+    return result
+
+# Calculates heuristic values of vertical board segments
+def verticalHValue(board) :
+    currChar = ''
+    currCount = 0
+    bCount = 0
+    wCount = 0
+    result = 0
+    for i in range(6) :
+        currCount = 0
+        for j in range(6) :
+            if (board[j][i] != currChar) :
+                currCount = 1
+                currChar = board[j][i]
+            else :
+                currCount += 1
+                if (currCount == 2) :
+                    if (currChar == 'b') :
+                        result -= 3
+                    elif (currChar == 'w') :
+                        result += 3
+                elif (currCount == 3) :
+                    if (currChar == 'b') :
+                        result -= 6
+                    elif (currChar == 'w') :
+                        result += 6
+                elif (currCount == 4) :
+                    if (currChar == 'b') :
+                        result -= 8
+                    elif (currChar == 'w') :
+                        result += 8
+                elif (currCount == 5) :
+                    if (currChar == 'b') :
+                        result -= 100
+                    elif (currChar == 'w') :
+                        result += 100
+    return result
+
+# Calculates heuristic values of horizontal board segments
+def horizontalHValue(board) :
+    currChar = ''
+    currCount = 0
+    bCount = 0
+    wCount = 0
+    result = 0
+    for i in range(6) :
+        currCount = 0
+        for j in range(6) :
+            if (board[i][j] != currChar) :
+                currCount = 1
+                currChar = board[i][j]
+            else :
+                currCount += 1
+                if (currCount == 2) :
+                    if (currChar == 'b') :
+                        result -= 3
+                    elif (currChar == 'w') :
+                        result += 3
+                elif (currCount == 3) :
+                    if (currChar == 'b') :
+                        result -= 6
+                    elif (currChar == 'w') :
+                        result += 6
+                elif (currCount == 4) :
+                    if (currChar == 'b') :
+                        result -= 8
+                    elif (currChar == 'w') :
+                        result += 8
+                elif (currCount == 5) :
+                    if (currChar == 'b') :
+                        result -= 100
+                    elif (currChar == 'w') :
+                        result += 100
+    return result
