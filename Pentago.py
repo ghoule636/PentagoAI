@@ -29,13 +29,14 @@ def main() :
     global outputFile
 
     outputFile = open("output.txt", 'w')
-    maxDepth = 3
+    maxDepth = 2
+    moveList = []
 
     #testBoard()  #This function is used for testing board functionality.
 
-    testAI() # This is used to test the AI functionality.
+    #testAI() # This is used to test the AI functionality.
 
-    #start(initializeGame()) # This function starts the main game.
+    start(initializeGame()) # This function starts the main game.
 
 def initializeGame() :
     global player1Name
@@ -43,10 +44,8 @@ def initializeGame() :
     global player1Color
     global player2Color
     global isAI
-    global moveList
     global outputFile
 
-    moveList = []
         
     player1Name = input("Player 1 Name: ")
     player2Name = input("Player 2 Name: ")
@@ -74,15 +73,17 @@ def initializeGame() :
         isAI = input("Is player 2 a computer? y/n?: ")
         if (isAI.lower() == 'y') :
             isAI = 'y'
+            isAIString = " (AI)"
         elif (isAI.lower() == 'n') :
             isAI = 'n'
+            isAIString = ""
         else :
             print("Invalid Choice type Y or N")
 
 
     print("Welcome {0}!".format(player1Name), end='')
     print(" You have chosen: {0}".format(colorChoice))
-    outputFile.write("Player 1 Name: {0}\nPlayer 2 Name: {1}\nPlayer 1 Color: {2}\nPlayer 2 Color: {3}\n".format(player1Name, player2Name, player1Color, player2Color))
+    outputFile.write("Player 1 Name: {0}\nPlayer 2 Name: {1}{2}\nPlayer 1 Color: {3}\nPlayer 2 Color: {4}\n".format(player1Name, player2Name, isAIString, player1Color, player2Color))
     random.seed()
     goFirst = random.randint(1, 2)
 
@@ -128,7 +129,7 @@ def start(firstMove) :
             else :
                 humanMove(board, player2Color)
                 print(board)
-            winner == board.checkWin()
+            winner = board.checkWin()
             if (winner == -1) :
                 print("{0}'s turn".format(player1Name))
                 humanMove(board, player1Color)
@@ -160,35 +161,19 @@ def start(firstMove) :
     return 0
 
 def AIMove(board, type) :
+    global moveList
+    global outputFile
     global maxDepth
 
     move = AI.decideMove(board, maxDepth, type)
-
-    print("AI move: " + str(move))
-
-
-def humanMove(board, type) :
-    global moveList
-    global outputFile
-
-    move = input("Move: ")
 
     boardNum = int(move[0])
     pos = int(move[2])
     boardRotate = move[4]
     rotateDir = move[5]
 
-    check = board.addPiece(boardNum, pos, type)
+    board.addPiece(boardNum, pos, type)
 
-    while (not check) :
-        move = input("Invalid move try again")
-        boardNum = int(move[0])
-        pos = int(move[2])
-        boardRotate = move[4]
-        rotateDir = move[5]
-
-        check = board.addPiece(boardNum, pos, type)
-        
     winCheck = board.checkWin()
     if (winCheck == -1) :
         if (rotateDir.lower() == 'l') :
@@ -199,27 +184,98 @@ def humanMove(board, type) :
     outputFile.write(str(board) + "\n")
     outputFile.write(str(moveList) + "\n")
 
+    print("AI move: " + str(move))
+
+
+def humanMove(board, type) :
+    global moveList
+    global outputFile
+
+    move = input("Move: ")
+
+    if (len(move) == 6) :
+        try :
+            boardNum = int(move[0])
+            pos = int(move[2])
+            boardRotate = int(move[4])
+            rotateDir = move[5]
+
+            if (rotateDir.lower() == 'l' or rotateDir.lower() == 'r') :
+                if (boardRotate > 0 and boardRotate < 5) :
+                    check = board.addPiece(boardNum, pos, type)
+                else :
+                    print("Wrong board num.")
+                    check = False
+            else :
+                print("invalid direction")
+                check = False
+        except ValueError :
+            print("not a number")
+            check = False
+    else :
+        print("Invalid length")
+        print(len(move))
+        check = False
+
+    while (not check) :
+        move = input("Invalid move try again\nMove: ")
+        if (len(move) == 6) :
+            try :
+                boardNum = int(move[0])
+                pos = int(move[2])
+                boardRotate = int(move[4])
+                rotateDir = move[5]
+
+                if (rotateDir.lower() == 'l' or rotateDir.lower() == 'r') :
+                    if (boardRotate > 0 and boardRotate < 5) :
+                        check = board.addPiece(boardNum, pos, type)
+                    else :
+                        print("Wrong board num.")
+                        check = False
+                else :
+                    print("invalid direction")
+                    check = False
+            except ValueError :
+                print("not a number")
+                check = False
+        else :
+            print("Invalid length")
+            print(len(move))
+            check = False
+        
+    winCheck = board.checkWin()
+    if (winCheck == -1) :
+        if (rotateDir.lower() == 'l') :
+            board.shiftLeft(boardRotate)
+        else :
+            board.shiftRight(boardRotate)
+    moveList.append(move)
+    outputFile.write(str(board) + "\n")
+    outputFile.write(str(moveList) + "\n")
+
 def testBoard() :
     test = Board()
 
     print(test)
     
     # horizontal win config
-    """
-    test.addPiece(3, 7, 'b')
-    test.addPiece(3, 8, 'b')
-    test.addPiece(3, 9, 'b')
-    test.addPiece(4, 7, 'b')
-    test.addPiece(4, 8, 'b')
+    
+    test.addPiece(1, 4, 'w')
+    test.addPiece(1, 5, 'w')
+    test.addPiece(1, 6, 'w')
+    test.addPiece(2, 4, 'w')
+    test.addPiece(2, 5, 'w')
+    test.addPiece(1, 3, 'w')
+    test.addPiece(1, 7, 'w')
 
     # horizontal config 2
-    test.addPiece(1, 1, 'w')
-    test.addPiece(1, 2, 'w')
-    test.addPiece(1, 3, 'w')
-    test.addPiece(2, 1, 'w')
-    test.addPiece(2, 2, 'w')
-    test.addPiece(2, 3, 'b')
-    """
+    test.addPiece(1, 1, 'b')
+    test.addPiece(1, 2, 'b')
+    test.addPiece(1, 8, 'b')
+    test.addPiece(1, 9, 'b')
+    test.addPiece(3, 1, 'b')
+    test.addPiece(3, 4, 'b')
+    
 
     # vertical win config
     """
@@ -255,7 +311,7 @@ def testBoard() :
     test.addPiece(3, 5, 'w')
     test.addPiece(3, 7, 'b')
     """
-    
+    """
     test.addPiece(1, 2, 'w')
     test.addPiece(1, 6, 'w')
     test.addPiece(2, 7, 'w')
@@ -279,19 +335,22 @@ def testBoard() :
     test.addPiece(4, 1, 'b')
     test.addPiece(3, 6, 'b')
     test.addPiece(3, 8, 'b')
-    
+    """
     print("win? : {0}".format(test.checkWin()))
 
     print(test)
 
 def testAI() :
+    global maxDepth
     test = Board()
-    maxDepth = 3
 
     # diagonal win configs
     
-    test.addPiece(1, 1, 'b')
+    test.addPiece(1, 1, 'w')
     test.addPiece(1, 5, 'b')
+    test.addPiece(1, 2, 'w')
+
+    """
     test.addPiece(1, 9, 'b')
     test.addPiece(4, 1, 'b')
     test.addPiece(4, 5, 'b')
@@ -303,6 +362,7 @@ def testAI() :
     test.addPiece(3, 3, 'b')
     test.addPiece(3, 5, 'b')
     test.addPiece(3, 7, 'b')
+    """
 
     test2 = test.copyBoard()
 
@@ -310,7 +370,10 @@ def testAI() :
     print(test)
     #print(test2)
 
-    AI.decideMove(test, maxDepth, 'w')
+    AIMove(test, 'b')
+
+    print(test)
+    #AI.decideMove(test, maxDepth, 'b')
     print("Done!")
 
 main()

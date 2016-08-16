@@ -4,12 +4,29 @@
 # TCSS 435 AI Spring 2016
 """
 from collections import deque
+import sys
 
 def decideMove(state, maxDepth, type) :
-    result = ""
     moveTree = createTree(state, maxDepth, type)
 
-    return result
+    bestIndex = 0  
+    if (type == 'w') :
+        bestValue = -sys.maxsize
+        for i in range(len(moveTree.children)) :
+            hValue = minMax(moveTree.children[i], True, maxDepth)
+            if (hValue > bestValue) :
+                bestIndex = i
+                bestValue = hValue
+
+    else :
+        bestValue = sys.maxsize
+        for i in range(len(moveTree.children)) :
+            hValue = minMax(moveTree.children[i], False, maxDepth)
+            if (hValue < bestValue) :
+                bestIndex = i
+                bestValue = hValue
+
+    return moveTree.children[bestIndex].move
 
 
 # creates tree of moves up to maximum depth ... to consider how many moves should i consider rotations... depth 3 is 6 mill with rotations only 12000 without
@@ -55,6 +72,30 @@ def createTree(state, maxDepth, type) :
             node = fringe.popleft()
 
     return root
+
+def minMax(node, maxOrMin, maxDepth) :
+
+    if (node.depth == maxDepth) :
+        return node.data.heuristicValue()
+    
+
+    if (maxOrMin) :
+        bestH = -sys.maxsize
+        for child in node.children :
+            value = minMax(child, False, maxDepth)
+            bestH = max(bestH, value)
+        return bestH
+    else :
+        bestH = sys.maxsize
+        for child in node.children :
+            value = minMax(child, True, maxDepth)
+            bestH = min(bestH, value)
+        return bestH
+
+
+
+    
+
 
 
 # inner class used to represent nodes on tree

@@ -317,9 +317,11 @@ class Board:
         v = verticalHValue(tempBoard)
         d = diagonalHValue(tempBoard)
 
+        """
         print("h " + str(h))
         print("v " + str(v))
         print("d " + str(d))
+        """
 
         # add up heuristic values here
         result = h + v + d
