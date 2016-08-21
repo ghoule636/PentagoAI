@@ -386,52 +386,40 @@ def diagonalHValue(board) :
             char2 = board[i][5 - i]
         else :
             count2 += 1
-            if (count2 == 2) :
-                if (char2 == 'b') :
-                    result -= 3
-                elif (char2 == 'w') :
-                    result += 3
-            elif (count2 == 3) :
-                if (char2 == 'b') :
-                    result -= 6
-                elif (char2 == 'w') :
-                    result += 6
-            elif (count2 == 4) :
-                if (char2 == 'b') :
-                    result -= 8
-                elif (char2 == 'w') :
-                    result += 8
-            elif (count2 == 5) :
-                if (char2 == 'b') :
-                    result -= 100
-                elif (char2 == 'w') :
-                    result += 100
+            newPoints = 0
+            if (currCount == 2) :
+                newPoints += 3
+            elif (currCount == 3) :
+                newPoints += 7
+            elif (currCount == 4) :
+                newPoints += 15
+            elif (currCount == 5) :
+                newPoints += 100
+            if (currChar == 'b') :
+                newPoints *= -1
+            elif (currChar != 'w') :
+                newPoints = 0
+            result += newPoints
 
         if (board[i][i] != currChar) :
             currCount = 1
             currChar = board[i][i]
         else :
             currCount += 1
+            newPoints = 0
             if (currCount == 2) :
-                if (currChar == 'b') :
-                    result -= 3
-                elif (currChar == 'w') :
-                    result += 3
+                newPoints += 3
             elif (currCount == 3) :
-                if (currChar == 'b') :
-                    result -= 6
-                elif (currChar == 'w') :
-                    result += 6
+                newPoints += 7
             elif (currCount == 4) :
-                if (currChar == 'b') :
-                    result -= 8
-                elif (currChar == 'w') :
-                    result += 8
+                newPoints += 15
             elif (currCount == 5) :
-                if (currChar == 'b') :
-                    result -= 100
-                elif (currChar == 'w') :
-                    result += 100
+                newPoints += 100
+            if (currChar == 'b') :
+                newPoints *= -1
+            elif (currChar != 'w') :
+                newPoints = 0
+            result += newPoints
     return result
 
 # Calculates heuristic values of vertical board segments
@@ -449,26 +437,20 @@ def verticalHValue(board) :
                 currChar = board[j][i]
             else :
                 currCount += 1
+                newPoints = 0
                 if (currCount == 2) :
-                    if (currChar == 'b') :
-                        result -= 3
-                    elif (currChar == 'w') :
-                        result += 3
+                    newPoints += 3
                 elif (currCount == 3) :
-                    if (currChar == 'b') :
-                        result -= 6
-                    elif (currChar == 'w') :
-                        result += 6
+                    newPoints += 7
                 elif (currCount == 4) :
-                    if (currChar == 'b') :
-                        result -= 8
-                    elif (currChar == 'w') :
-                        result += 8
+                    newPoints += 15
                 elif (currCount == 5) :
-                    if (currChar == 'b') :
-                        result -= 100
-                    elif (currChar == 'w') :
-                        result += 100
+                    newPoints += 100
+                if (currChar == 'b') :
+                    newPoints *= -1
+                elif (currChar != 'w') :
+                    newPoints = 0
+                result += newPoints
     return result
 
 # Calculates heuristic values of horizontal board segments
@@ -486,24 +468,18 @@ def horizontalHValue(board) :
                 currChar = board[i][j]
             else :
                 currCount += 1
+                newPoints = 0
                 if (currCount == 2) :
-                    if (currChar == 'b') :
-                        result -= 3
-                    elif (currChar == 'w') :
-                        result += 3
+                    newPoints += 3
                 elif (currCount == 3) :
-                    if (currChar == 'b') :
-                        result -= 6
-                    elif (currChar == 'w') :
-                        result += 6
+                    newPoints += 7
                 elif (currCount == 4) :
-                    if (currChar == 'b') :
-                        result -= 8
-                    elif (currChar == 'w') :
-                        result += 8
+                    newPoints += 15
                 elif (currCount == 5) :
-                    if (currChar == 'b') :
-                        result -= 100
-                    elif (currChar == 'w') :
-                        result += 100
+                    newPoints += 100
+                if (currChar == 'b') :
+                    newPoints *= -1
+                elif (currChar != 'w') :
+                    newPoints = 0
+                result += newPoints
     return result

@@ -1,0 +1,7 @@
+An interactive Pentago game! Featuring 2 player mode or versus AI. 
+AI is default set to an alpha beta algorithm. To change this to minmax algorithm uncomment line 168 and comment out line 169 in Pentago.py.
+Ai is by default set to examine moves to depth 2. To change this set variable maxDepth in main in Pentago.py.
+
+To play, run Pentago.py. Follow the prompts to enter names, choose colors and decide if player 2 is an AI player or not. 
+When choosing a move you must be specific. Example 1/2 3l. This move will place a piece on board 1 in position 2 and then rotate board 3 left.
+There is input validation and specific error text every time the user is asked to input data.

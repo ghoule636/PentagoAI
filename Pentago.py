@@ -165,7 +165,8 @@ def AIMove(board, type) :
     global outputFile
     global maxDepth
 
-    move = AI.decideMove(board, maxDepth, type)
+    #move = AI.decideMoveMinMax(board, maxDepth, type)
+    move = AI.decideMoveAlphaBeta(board, maxDepth, type)
 
     boardNum = int(move[0])
     pos = int(move[2])
@@ -214,7 +215,6 @@ def humanMove(board, type) :
             check = False
     else :
         print("Invalid length")
-        print(len(move))
         check = False
 
     while (not check) :
@@ -240,7 +240,6 @@ def humanMove(board, type) :
                 check = False
         else :
             print("Invalid length")
-            print(len(move))
             check = False
         
     winCheck = board.checkWin()
@@ -370,10 +369,11 @@ def testAI() :
     print(test)
     #print(test2)
 
-    AIMove(test, 'b')
+    #AIMove(test, 'b')
 
     print(test)
-    #AI.decideMove(test, maxDepth, 'b')
+    print(test.heuristicValue())
+    AI.decideMoveAlphaBeta(test, maxDepth, 'b')
     print("Done!")
 
 main()
